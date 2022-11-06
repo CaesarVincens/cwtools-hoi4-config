@@ -5,6 +5,18 @@ types = {
 		subtype[doctrine] = {
 			doctrine = yes
 		}
+		subtype[nsb_armor_tech] = {
+			folder = {
+				name = nsb_armour_folder
+				position = { x = float y = float }
+			}
+		}
+		subtype[bba_air_tech] = {
+			folder = {
+				name = bba_air_techs_folder
+				position = { x = float y = float }
+			}
+		}	
 	}
 	type[tech_sharing_group] = {
 		path = "game/common/technology_sharing"
@@ -27,7 +39,12 @@ technology = {
 	## cardinality = 0..1
 	xp_research_cost = int
 	## cardinality = 0..1
+	xp_boost_cost = int
+	## cardinality = 0..1
 	xp_research_bonus = float
+	subtype[doctrine] = {
+		xp_unlock_cost = int
+	}
 
 	## cardinality = 0..1
 	### Hides technology unless trigger is true.
@@ -47,17 +64,34 @@ technology = {
 		## cardinality = ~1..inf
 		<technology>
 	}
-	## cardinality = 0..1
+	## cardinality = 0..inf
 	### Enables listed units.
 	enable_subunits = {
 		## cardinality = ~1..inf
 		<unit>
 	}
-	## cardinality = 0..1
+	## cardinality = 0..inf
 	### Enables listed equipment.
 	enable_equipments = {
-		## cardinality = ~1..inf
+		## cardinality = 0..1
+		limit = {
+			alias_name[trigger] = alias_match_left[trigger]
+		}
+		
+		## cardinality = 0..inf
 		<equipment>
+		## cardinality = 0..inf
+		<duplicate_archetypes>
+		## cardinality = 0..inf
+		subtype[nsb_armor_tech] = {
+			## cardinality = ~1..inf
+			value_set[nsb_armor_variants]
+		}
+		## cardinality = 0..inf
+		subtype[bba_air_tech] = {
+			## cardinality = ~1..inf
+			value_set[bba_air_variants]
+		}
 	}
 	## cardinality = 0..inf
 	### Enables listed equipment modules.
@@ -66,7 +100,7 @@ technology = {
 		<module>
 	}
 
-	## cardinality = 0..1
+	## cardinality = 0..inf
 	### Sets max level of named building.
 	enable_building = {
 		building = <building>
@@ -172,6 +206,8 @@ technology = {
 		alias_name[effect] = alias_match_left[effect]
 	}
 
+	## cardinality = 0..1
+	force_use_small_tech_layout = yes
 	## cardinality = 0..1
 	show_effect_as_desc = bool
 	## cardinality = 0..1

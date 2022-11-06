@@ -11,6 +11,14 @@ country_history = {
 	## cardinality = 0..1
 	oob = <oob>
 	alias_name[effect] = alias_match_left[effect]
+	
+	### adds character to country
+	## cardinality = 0..inf
+	recruit_character = <character>
+
+	### Set country's current train buffer
+	## cardinality = 0..inf
+	starting_train_buffer = float
 
 	## cardinality = 0..inf
 	date_field = {
@@ -21,5 +29,9 @@ country_history = {
 		## cardinality = 0..inf
 		oob = <oob>
 		alias_name[effect] = alias_match_left[effect]
+
+		### adds character to country
+		## cardinality = 0..inf
+		recruit_character = <character>
 	}
 }

@@ -18,6 +18,13 @@ types = {
 		subtype[land_unit] = {
 			map_icon_category = enum[land_map_icons]
 		}
+		subtype[armor_unit] = {
+			type = {
+				armor
+				## cardinality = 0..8
+				enum[land_units]
+			}
+		}
 		subtype[catch] = {
 		}
 	}
@@ -30,6 +37,8 @@ types = {
 }
 
 unit = {
+	## cardinality = 0..1
+	abbreviation = localisation_inline
 	### 3D map asset.
 	sprite = scalar
 	#enum[unit_sprites]
@@ -37,6 +46,8 @@ unit = {
 		need = {
 			## cardinality = ~1..inf
 			<equipment> = int
+			## cardinality = 0..1
+			value[nsb_armor_variants] = int
 		}
 		ai_priority = int
 
@@ -166,12 +177,21 @@ unit = {
 		need = {
 			## cardinality = ~1..inf
 			<equipment> = int
+			## cardinality = 0..1
+			value[bba_air_variants] = int
 		}
 		type = {
 			## cardinality = ~1..inf
 			enum[air_units]
 		}
 		alias_name[air_stat] = alias_match_left[air_stat]
+
+		### Determines the default size of the air wing for this unit
+		## cardinality = 0..1
+		land_air_wing_size = int
+		### Determines the default size of the carrier air wing for this unit
+		## cardinality = 0..1
+		carrier_air_wing_size = int
 	}
 
 	subtype[catch] = {
@@ -222,6 +242,11 @@ ship_name = {
 		enum[ship_units]
 	}
 	## cardinality = 0..1
+	link_numbering_with = {
+		## cardinality = ~1..inf
+		<ship_name>
+	}
+	## cardinality = 0..1
 	prefix = scalar
 	## cardinality = 0..1
 	fallback_name = scalar
@@ -241,6 +266,7 @@ ship_name = {
 	ordered = {
 		## cardinality = ~1..inf
 		int = {
+			## cardinality = 1..2
 			scalar
 		}
 	}
@@ -279,6 +305,7 @@ division_name = {
 	ordered = {
 		## cardinality = ~1..inf
 		int = {
+			## cardinality = 1..2
 			scalar
 		}
 	}
@@ -328,6 +355,11 @@ enums = {
 		convoy
 		paratroopers
 		scout_plane
+		floating_harbor
+		railway_gun
+		train
+		flame
+		maritime_patrol_plane
 	}
 	enum[land_units] = {
 		infantry
@@ -339,6 +371,7 @@ enums = {
 		motorized
 		mechanized
 		armor
+		amphibious
 	}
 	enum[air_units] = {
 		air_transport
@@ -363,6 +396,23 @@ enums = {
 		light_cruiser
 		screen_ship
 		submarine
+	}
+	enum[allowed_air_unit_missions] = {
+		paradrop
+		air_supply
+		air_superiority
+		interception
+		naval_bomber
+		port_strike
+		naval_patrol
+		strategic_bomber
+		cas
+		attack_logistics
+		naval_kamikaze
+		naval_mines_planting
+		naval_mines_sweeping
+		recon
+		training
 	}
 	complex_enum[unit_category] = {
 		path = "game/common/unit_tags"

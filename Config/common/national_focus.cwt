@@ -1,10 +1,12 @@
 types = {
+	## unique = yes
 	## type_key_filter = focus_tree
 	type[focus_tree] = {
 		path = "game/common/national_focus"
 		name_field = "id"
 	}
 
+	## unique = yes
 	## type_key_filter = focus
 	type[focus] = {
 		path = "game/common/national_focus"
@@ -12,6 +14,7 @@ types = {
 		name_field = "id"
 	}
 
+	## unique = yes
 	## type_key_filter = shared_focus
 	type[shared_focus] = {
 		path = "game/common/national_focus"
@@ -38,7 +41,7 @@ focus_tree = {
 	## cardinality = 0..inf
 	shared_focus = <shared_focus>
 
-	## cardinality = ~1..1
+	## cardinality = 0..1
 	continuous_focus_position = {
 		x = int
 		y = int
@@ -82,9 +85,14 @@ focus_tree = {
 		## severity = warning
 		icon = <spriteType>
 
+		## severity = warning
 		cost = float
-		x = int
-		y = int
+
+		## severity = warning
+		x = float
+
+		## severity = warning
+		y = float
 
 		## cardinality = 0..inf
 		offset = {
@@ -210,6 +218,12 @@ focus_tree = {
 		## cardinality = 0..1
 		## push_scope = any
 		complete_tooltip = {
+			## cardinality = ~1..inf
+			alias_name[effect] = alias_match_left[effect]
+		}
+
+		## cardinality = 0..1
+		on_uncomplete = {
 			## cardinality = ~1..inf
 			alias_name[effect] = alias_match_left[effect]
 		}
@@ -373,6 +387,12 @@ shared_focus = {
 	## cardinality = 0..1
 	## push_scope = any
 	complete_tooltip = {
+		## cardinality = ~1..inf
+		alias_name[effect] = alias_match_left[effect]
+	}
+
+	## cardinality = 0..1
+	on_uncomplete = {
 		## cardinality = ~1..inf
 		alias_name[effect] = alias_match_left[effect]
 	}
